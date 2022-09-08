@@ -28,9 +28,19 @@ def args_generator():
         choices=["video", "playlist"],
         default="video",
     )
-    parser.add_argument("-m", "--max", help="Max # of items in query result", default=5)
     parser.add_argument(
-        "-n", "--next_count", help="Max count of searching next result", default=1
+        "-m",
+        "--max",
+        help="Max # of items in query result",
+        default=5,
+        type=int,
+    )
+    parser.add_argument(
+        "-n",
+        "--next_count",
+        help="Max count of searching next result",
+        default=1,
+        type=int,
     )
     parser.add_argument("-e", "--export_path", help="Export path", default="export")
     args = parser.parse_args()

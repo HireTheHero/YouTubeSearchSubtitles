@@ -11,6 +11,7 @@ from typing import List
 from apiclient.discovery import build
 import numpy as np
 from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api._errors import TranscriptsDisabled
 
 
 class InputTypeException(Exception):
@@ -43,7 +44,10 @@ def query_youtube(
             raise InputTypeException("For 2nd~ time search, provide previous result")
         else:
             response = youtube.search().list_next(prev_response, prev_result)
-    result = response.execute()
+    if response:
+        result = response.execute()
+    else:
+        result = None
     return response, result
 
 
@@ -85,6 +89,10 @@ def get_videos(args):
             response, result = query_youtube(args, youtube, is_first)
         else:
             response, result = query_youtube(args, youtube, is_first, response, result)
+        if not response:
+            break
+        else:
+            pass
         if args.search_type == "playlist":
             result_out = get_videos_in_playlist(args, result)
         else:
@@ -103,7 +111,10 @@ def get_transcripts(video_list: List[str]):
     """
     out = []
     for video in video_list:
-        result = YouTubeTranscriptApi.get_transcript(video)
+        try:
+            result = YouTubeTranscriptApi.get_transcript(video)
+        except TranscriptsDisabled:
+            result = "(Subtitles not available)"
         result_concat = [r["text"] for r in result]
         out.append(" ".join(result_concat))
     return out
