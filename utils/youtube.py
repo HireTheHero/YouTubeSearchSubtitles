@@ -105,7 +105,7 @@ def get_videos(args):
     return out
 
 
-def get_transcripts(video_list: List[str]):
+def get_subtitles(video_list: List[str]):
     """
     Get list of transcripts from list of videos
     """

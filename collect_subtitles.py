@@ -11,7 +11,7 @@ Extract subtitles from YouTube videos in query results
 """
 import time
 
-from utils.youtube import get_transcripts, get_videos
+from utils.youtube import get_subtitles, get_videos
 from utils.utils import args_generator, get_module_logger, export_json
 
 if __name__ == "__main__":
@@ -23,10 +23,10 @@ if __name__ == "__main__":
     videos = get_videos(args)
     video_ids = videos["video_id"]
     logger.info(f"video list obtained with length {len(video_ids)}")
-    # Get transcripts for acquired video ids
-    transcripts = get_transcripts(video_ids)
-    videos["transcript"] = transcripts
-    logger.info(f"Short example for transcripts: {transcripts[0][:100]}")
+    # Get subtitles for acquired video ids
+    subtitles = get_subtitles(video_ids)
+    videos["transcript"] = subtitles
+    logger.info(f"Short example for subtitles: {subtitles[0][:100]}")
     # export
     export_json(args, videos)
     logger.info(f"Transcription collected in {round(time.time()-t0, 2)} seconds")
