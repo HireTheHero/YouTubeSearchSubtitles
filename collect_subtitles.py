@@ -29,4 +29,4 @@ if __name__ == "__main__":
     logger.info(f"Short example for subtitles: {subtitles[0][:100]}")
     # export
     export_json(args, videos)
-    logger.info(f"Transcription collected in {round(time.time()-t0, 2)} seconds")
+    logger.info(f"Subtitles collected in {round(time.time()-t0, 2)} seconds")
